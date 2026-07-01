@@ -151,6 +151,7 @@
         <table>
             <thead>
                 <tr>
+                    <th style="width: 70px;">Image</th>
                     <th>Title</th>
                     <th>Date Published</th>
                     <th style="width: 120px;">Actions</th>
@@ -159,6 +160,13 @@
             <tbody>
                 @forelse($posts as $post)
                 <tr>
+                    <td>
+                        @if($post->image)
+                            <img src="{{ $post->image }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;" alt="thumb">
+                        @else
+                            <div style="width: 50px; height: 50px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #cbd5e1;"><i class="fa-solid fa-image"></i></div>
+                        @endif
+                    </td>
                     <td style="font-weight: 500;">{{ $post->title }}</td>
                     <td style="color: var(--text-muted);">{{ $post->published_at ? $post->published_at->format('M d, Y') : 'N/A' }}</td>
                     <td>

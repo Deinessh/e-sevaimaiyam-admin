@@ -128,19 +128,39 @@
             </a>
         </div>
 
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Post Title</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" placeholder="Enter an engaging title...">
+                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" placeholder="Enter an engaging title..." required>
                 @error('title')
                     <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                 @enderror
             </div>
 
+            <div class="form-group" style="background: #f1f5f9; padding: 1.25rem; border-radius: 12px; border: 1px dashed #cbd5e1;">
+                <label style="margin-bottom: 0.75rem;"><i class="fa-solid fa-image"></i> Blog Cover Image</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;">
+                    <div>
+                        <label for="image_file" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Upload Image File (from PC)</label>
+                        <input type="file" id="image_file" name="image_file" class="form-control" accept="image/*" style="padding: 0.5rem; background: #fff;">
+                    </div>
+                    <div>
+                        <label for="image_url" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">OR Paste Image URL (e.g. Unsplash)</label>
+                        <input type="url" id="image_url" name="image_url" class="form-control" value="{{ old('image_url') }}" placeholder="https://...">
+                    </div>
+                </div>
+                @error('image_file')
+                    <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                @enderror
+                @error('image_url')
+                    <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-group">
-                <label for="content">Content</label>
-                <textarea id="content" name="content" class="form-control" rows="8" placeholder="Write your blog post content here...">{{ old('content') }}</textarea>
+                <label for="content">Content (Rich Text Editor - MS Excel / Word style formatting)</label>
+                <textarea id="content" name="content" class="form-control" rows="12" placeholder="Write your blog post content here...">{{ old('content') }}</textarea>
                 @error('content')
                     <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                 @enderror
@@ -151,5 +171,15 @@
             </button>
         </form>
     </div>
+
+    <!-- CKEditor 4 Full CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('content', {
+            height: 380,
+            versionCheck: false,
+            removeButtons: 'Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Subscript,Superscript,CopyFormatting,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Flash,PageBreak,Iframe,ShowBlocks,About'
+        });
+    </script>
 </body>
 </html>

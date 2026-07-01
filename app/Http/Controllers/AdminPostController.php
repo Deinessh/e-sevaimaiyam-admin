@@ -24,13 +24,24 @@ class AdminPostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'date' => 'nullable|date',
+            'image_file' => 'nullable|image|max:5120',
+            'image_url' => 'nullable|url|max:2048',
         ]);
         
-        $date = $request->input('date') ? date('F Y', strtotime($request->input('date'))) : date('F Y');
+        $imagePath = null;
+        if ($request->hasFile('image_file')) {
+            $file = $request->file('image_file');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_.-]/', '', $file->getClientOriginalName());
+            $file->move(public_path('uploads'), $filename);
+            $imagePath = url('uploads/' . $filename);
+        } elseif ($request->filled('image_url')) {
+            $imagePath = $request->input('image_url');
+        }
 
         Post::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
+            'image' => $imagePath,
             'published_at' => $request->input('date') ?? now(),
         ]);
 
