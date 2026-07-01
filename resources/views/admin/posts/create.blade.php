@@ -159,7 +159,7 @@
             </div>
 
             <div class="form-group">
-                <label for="content">Content (Rich Text Editor - MS Excel / Word style formatting)</label>
+                <label for="content">Content</label>
                 <textarea id="content" name="content" class="form-control" rows="12" placeholder="Write your blog post content here...">{{ old('content') }}</textarea>
                 @error('content')
                     <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
