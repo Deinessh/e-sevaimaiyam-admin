@@ -96,6 +96,15 @@
             color: var(--text-main);
             box-shadow: none;
         }
+        .btn-edit { 
+            background-color: #3b82f6; 
+            padding: 0.5rem 0.875rem;
+            font-size: 0.875rem;
+        }
+        .btn-edit:hover { 
+            background-color: #2563eb; 
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
         .btn-danger { 
             background-color: #ef4444; 
             padding: 0.5rem 0.875rem;
@@ -154,7 +163,7 @@
                     <th style="width: 70px;">Image</th>
                     <th>Title</th>
                     <th>Date Published</th>
-                    <th style="width: 120px;">Actions</th>
+                    <th style="width: 190px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -170,13 +179,18 @@
                     <td style="font-weight: 500;">{{ $post->title }}</td>
                     <td style="color: var(--text-muted);">{{ $post->published_at ? $post->published_at->format('M d, Y') : 'N/A' }}</td>
                     <td>
-                        <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">
-                                <i class="fa-solid fa-trash-can"></i> Delete
-                            </button>
-                        </form>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-edit">
+                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                            </a>
+                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="margin: 0;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
