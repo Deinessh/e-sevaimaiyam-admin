@@ -33,7 +33,7 @@ class AdminPostController extends Controller
             $file = $request->file('image_file');
             $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_.-]/', '', $file->getClientOriginalName());
             $file->move(public_path('uploads'), $filename);
-            $imagePath = url('uploads/' . $filename);
+            $imagePath = '/uploads/' . $filename;
         } elseif ($request->filled('image_url')) {
             $imagePath = $request->input('image_url');
         }
@@ -68,7 +68,7 @@ class AdminPostController extends Controller
             $file = $request->file('image_file');
             $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_.-]/', '', $file->getClientOriginalName());
             $file->move(public_path('uploads'), $filename);
-            $imagePath = url('uploads/' . $filename);
+            $imagePath = '/uploads/' . $filename;
         } elseif ($request->filled('image_url')) {
             $imagePath = $request->input('image_url');
         }
